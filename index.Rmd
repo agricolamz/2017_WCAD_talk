@@ -1,0 +1,126 @@
+---
+title: "World Consonant Alternation Database"
+subtitle: "первые результаты и несколько замечанйи о типологических выборках"
+author: "Г. Мороз <br> Лаборотория языков Кавказа"
+date: "Научный семинар Школы Лингвистики <br> (20 октября 2017)"
+output: 
+   xaringan::moon_reader:
+     css: ["default", "my_theme.css"]
+     lib_dir: libs
+     nature:
+       highlightStyle: github
+       highlightLines: true
+       countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(message=FALSE,
+                      fig.width=10.4,
+                      fig.height=5)
+library(tidyverse); library(lingtypology)
+db <- read_tsv("/home/agricolamz/_DATA/OneDrive1/_Work/github/wcad/database.csv")
+#db <- read_tsv("https://raw.githubusercontent.com/agricolamz/wcad/master/database.csv")
+bibliography <- read_tsv("/home/agricolamz/_DATA/OneDrive1/_Work/github/wcad/bibliography.csv")
+
+n_alternations <- nrow(db)
+n_languages <- length(unique(db$language))
+n_contributers <- length(unique(bibliography$contributer))
+bibliography$aff <- aff.lang(bibliography$language)
+n_affiliation <- unique(sapply(seq_along(bibliography$language), function(i) {
+    strsplit(bibliography$aff[i], ",")[[1]][1]}))
+n_affiliation <- length(unique(n_affiliation))-1
+```
+
+class: inverse, center, middle
+
+# Базы звуковых изменений
+
+---
+## Базы звуковых изменений
+
+* [Reduplication database](http://reduplication.uni-graz.at/redup/)
+* [Metathesis in language](http://metathesisinlanguage.osu.edu/database.cfm)
+* [UniDia Database](http://www.diadm.ish-lyon.cnrs.fr/unidia/index.php)
+* [Phonobank](http://glottobank.org/#phonobank)
+
+
+---
+## Теоретические проблемы
+
+* Какие звуковые изменения встречаются часто/редко?
+* (и как это объясняют разные фонологические теории?)
+* Какие звуковые изменения часто встречаются вместе, а какие не "дружат"?
+* Насколько звуковые изменения мотивированы фонологической системой?
+* Какие звуковые изменения встречаются везде, а какие характерны для
+  * определенных языковых семей,
+  * языковых союзов
+  * или макроареалов?
+* Как универсалии/фриквенталии/рары в области звуковых изменений соотносятся с универсалиями в морфологии, синтаксисе и т. п.?
+* Создание data-driven типологии звуквых изменений.
+* ... наверное, еще масса всего, о чем я не подумал.
+
+---
+class: inverse, center, middle
+
+# World Consonant Alternation Database (WCAD)
+
+<https://agricolamz.github.io/wcad/>
+
+---
+## WCAD: общее
+
+В данный момент в базе данных есть
+
+* $`r n_alternations`$ звуковых изменений
+* из $`r n_languages`$ языков
+* из $`r n_affiliation`$ языковых семей,
+* добавленных $`r n_contributers`$ исследователями
+
+---
+## WCAD: основные принципы
+
+* исследователь находит источник
+* вносит все звуковые изменения, которые находит
+* разбирается в фонологии, чтобы корректно перевести в IPA
+* вности комментарии (фонологии vs морфонология)
+* добавляет пример
+* "разворачивает" сокращения в полях источник и результат
+* желательно, чтобы фонологические контексты были не специфичны для языка, поэтому они не "разворачиваются"
+* один исследователь вносит всю языковую (под)группу
+
+---
+class: inverse, center, middle
+
+# Первые результаты
+
+
+---
+class: inverse, center, middle
+
+# О типологической выборке
+
+---
+## О типологической выборке: литература
+
+* Bakker, D. (2010) ‘Language Sampling’, in J. J. Song (ed.), The Oxford Handbook of Linguistic Typology, Oxford Univ. Press.
+* Bell, A. (1978). ‘Language Samples‘, in J. H. Greenberg, C. A. Ferguson, and E. A. Moravcsik (eds.), Universals of Human Language. Cambridge, MA: MIT Press, 123–56.
+* Dryer, M. S. (1989). ‘Large Linguistic Areas and Language Sampling’, Studies in Language 13: 257–92.
+* Janssen, D. P., Bickel, B., and Zúñiga, F. (2006). ‘Randomization Tests in Language Typology’, Linguistic Typology 10: 419–40.
+* Perkins , R. D. (1989). ‘Statistical Techniques for Determining Language Sample Size’, Studies in Language 13: 293–315.
+* Rietveld, T., and van Hout, R. (1993). ‘Statistical Techniques for the Study of Language and Language Behaviour‘. Berlin: Mouton de Gruyter.
+* Ritkhoff, J., and Bakker, D. (1998). ‘Language Sampling’, Linguistic Typology 2: 263–314.
+* Widmann T. M. (2001) ‘Language Sampling for Typological Studies‘
+
+---
+class: middle
+
+* Пишите (<agricolamz@gmail.com>) или открывайте [issue](https://github.com/ropensci/lingtypology/issues).
+
+* Шаблон вебсайта WCAD: <https://ropensci.github.io/lingtypology/>
+
+* Слайды на ресурсе **GitHub**: <https://agricolamz.github.io/2017_SL_HSE_WCAD_sampling>
+
+* Презентация сделана при помощи следующих пакетов на R:
+  * [**xaringan**](https://github.com/yihui/xaringan)
+  * [**lingtypollogy**](https://github.com/ropensci/lingtypology/)

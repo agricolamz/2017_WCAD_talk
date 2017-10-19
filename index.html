@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>World Consonant Alternation Database</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Г. Мороз   Лаборотория языков Кавказа" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my_theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# World Consonant Alternation Database
+## первые результаты и несколько замечанйи о типологических выборках
+### Г. Мороз <br> Лаборотория языков Кавказа
+### Научный семинар Школы Лингвистики <br> (20 октября 2017)
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Базы звуковых изменений
+
+---
+## Базы звуковых изменений
+
+* [Reduplication database](http://reduplication.uni-graz.at/redup/)
+* [Metathesis in language](http://metathesisinlanguage.osu.edu/database.cfm)
+* [UniDia Database](http://www.diadm.ish-lyon.cnrs.fr/unidia/index.php)
+* [Phonobank](http://glottobank.org/#phonobank)
+
+
+---
+## Теоретические проблемы
+
+* Какие звуковые изменения встречаются часто/редко?
+* (и как это объясняют разные фонологические теории?)
+* Какие звуковые изменения часто встречаются вместе, а какие не "дружат"?
+* Насколько звуковые изменения мотивированы фонологической системой?
+* Какие звуковые изменения встречаются везде, а какие характерны для
+  * определенных языковых семей,
+  * языковых союзов
+  * или макроареалов?
+* Как универсалии/фриквенталии/рары в области звуковых изменений соотносятся с универсалиями в морфологии, синтаксисе и т. п.?
+* Создание data-driven типологии звуквых изменений.
+* ... наверное, еще масса всего, о чем я не подумал.
+
+---
+class: inverse, center, middle
+
+# World Consonant Alternation Database (WCAD)
+
+&lt;https://agricolamz.github.io/wcad/&gt;
+
+---
+## WCAD: общее
+
+В данный момент в базе данных есть
+
+* `\(1532\)` звуковых изменений
+* из `\(106\)` языков
+* из `\(39\)` языковых семей,
+* добавленных `\(5\)` исследователями
+
+---
+## WCAD: основные принципы
+
+* исследователь находит источник
+* вносит все звуковые изменения, которые находит
+* разбирается в фонологии, чтобы корректно перевести в IPA
+* вности комментарии (фонологии vs морфонология)
+* добавляет пример
+* "разворачивает" сокращения в полях источник и результат
+* желательно, чтобы фонологические контексты были не специфичны для языка, поэтому они не "разворачиваются"
+* один исследователь вносит всю языковую (под)группу
+
+---
+class: inverse, center, middle
+
+# Первые результаты
+
+
+---
+class: inverse, center, middle
+
+# О типологической выборке
+
+---
+## О типологической выборке: литература
+
+* Bakker, D. (2010) ‘Language Sampling’, in J. J. Song (ed.), The Oxford Handbook of Linguistic Typology, Oxford Univ. Press.
+* Bell, A. (1978). ‘Language Samples‘, in J. H. Greenberg, C. A. Ferguson, and E. A. Moravcsik (eds.), Universals of Human Language. Cambridge, MA: MIT Press, 123–56.
+* Dryer, M. S. (1989). ‘Large Linguistic Areas and Language Sampling’, Studies in Language 13: 257–92.
+* Janssen, D. P., Bickel, B., and Zúñiga, F. (2006). ‘Randomization Tests in Language Typology’, Linguistic Typology 10: 419–40.
+* Perkins , R. D. (1989). ‘Statistical Techniques for Determining Language Sample Size’, Studies in Language 13: 293–315.
+* Rietveld, T., and van Hout, R. (1993). ‘Statistical Techniques for the Study of Language and Language Behaviour‘. Berlin: Mouton de Gruyter.
+* Ritkhoff, J., and Bakker, D. (1998). ‘Language Sampling’, Linguistic Typology 2: 263–314.
+* Widmann T. M. (2001) ‘Language Sampling for Typological Studies‘
+
+---
+class: middle
+
+* Пишите (&lt;agricolamz@gmail.com&gt;) или открывайте [issue](https://github.com/ropensci/lingtypology/issues).
+
+* Шаблон вебсайта WCAD: &lt;https://ropensci.github.io/lingtypology/&gt;
+
+* Слайды на ресурсе **GitHub**: &lt;https://agricolamz.github.io/2017_SL_HSE_WCAD_sampling&gt;
+
+* Презентация сделана при помощи следующих пакетов на R:
+  * [**xaringan**](https://github.com/yihui/xaringan)
+  * [**lingtypollogy**](https://github.com/ropensci/lingtypology/)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
