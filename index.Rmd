@@ -1,6 +1,6 @@
 ---
 title: "World Consonant Alternation Database"
-subtitle: "первые результаты и несколько замечанйи о типологических выборках"
+subtitle: "первые результаты и несколько замечанйи о типологических выборках <br> https://goo.gl/4AQ65i"
 author: "Г. Мороз <br> Лаборотория языков Кавказа"
 date: "Научный семинар Школы Лингвистики <br> (20 октября 2017)"
 output: 
@@ -16,12 +16,12 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(message=FALSE,
+                      echo = FALSE,
                       fig.width=10.4,
                       fig.height=5)
-library(tidyverse); library(lingtypology)
-db <- read_tsv("/home/agricolamz/_DATA/OneDrive1/_Work/github/wcad/database.csv")
-#db <- read_tsv("https://raw.githubusercontent.com/agricolamz/wcad/master/database.csv")
-bibliography <- read_tsv("/home/agricolamz/_DATA/OneDrive1/_Work/github/wcad/bibliography.csv")
+library(tidyverse); library(lingtypology); library(dplyr)
+db <- read_tsv("https://raw.githubusercontent.com/agricolamz/wcad/master/database.csv")
+bibliography <- read_tsv("https://raw.githubusercontent.com/agricolamz/wcad/master/bibliography.csv")
 
 n_alternations <- nrow(db)
 n_languages <- length(unique(db$language))
@@ -76,6 +76,11 @@ class: inverse, center, middle
 * из $`r n_languages`$ языков
 * из $`r n_affiliation`$ языковых семей,
 * добавленных $`r n_contributers`$ исследователями
+  * Ася Дейнекина
+  * Аня Бобрёнкова
+  * Лёша Виняр
+  * Ульяна Багрянская
+  * Гарик Мороз
 
 ---
 ## WCAD: основные принципы
@@ -87,13 +92,38 @@ class: inverse, center, middle
 * добавляет пример
 * "разворачивает" сокращения в полях источник и результат
 * желательно, чтобы фонологические контексты были не специфичны для языка, поэтому они не "разворачиваются"
-* один исследователь вносит всю языковую (под)группу
+* один исследователь вносит **всю языковую (под)группу**
 
 ---
 class: inverse, center, middle
 
 # Первые результаты
 
+
+
+---
+## WCAD: количество
+```{r, cache=TRUE}
+db %>%
+  count(language) %>%
+  filter(language != "Southern Khanty") ->
+  m
+map.feature(m$language,
+            minichart.data = m$n,
+            minichart = "pie",
+            minichart.labels = TRUE,
+            width = 3,
+            label = m$language)
+```
+
+---
+## WCAD: количество
+```{r}
+map.feature(m$language,
+            feature = m$n,
+            title = "# звуковых изм.",
+            label = m$language)
+```
 
 ---
 class: inverse, center, middle
@@ -119,7 +149,7 @@ class: middle
 
 * Шаблон вебсайта WCAD: <https://ropensci.github.io/lingtypology/>
 
-* Слайды на ресурсе **GitHub**: <https://agricolamz.github.io/2017_SL_HSE_WCAD_sampling>
+* Слайды на ресурсе **GitHub**: <https://agricolamz.github.io/2017_WCAD_talk/>
 
 * Презентация сделана при помощи следующих пакетов на R:
   * [**xaringan**](https://github.com/yihui/xaringan)
