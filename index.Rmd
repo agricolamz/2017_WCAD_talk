@@ -30,6 +30,10 @@ bibliography$aff <- aff.lang(bibliography$language)
 n_affiliation <- unique(sapply(seq_along(bibliography$language), function(i) {
     strsplit(bibliography$aff[i], ",")[[1]][1]}))
 n_affiliation <- length(unique(n_affiliation))-1
+
+db %>% 
+  filter(language != "Southern Khanty") ->
+  db
 ```
 
 class: inverse, center, middle
@@ -99,15 +103,13 @@ class: inverse, center, middle
 
 # Первые результаты
 
-
-
 ---
 ## WCAD: количество
-```{r, cache=TRUE}
+```{r}
 db %>%
-  count(language) %>%
-  filter(language != "Southern Khanty") ->
+  count(language) ->
   m
+
 map.feature(m$language,
             minichart.data = m$n,
             minichart = "pie",
@@ -123,6 +125,41 @@ map.feature(m$language,
             feature = m$n,
             title = "# звуковых изм.",
             label = m$language)
+```
+
+---
+## WCAD: элизия
+
+```{r}
+db %>% 
+  mutate(elision = grepl("Ø", `→ Y`)) %>% 
+  count(language, elision) %>% 
+  filter(elision == TRUE) %>% 
+  full_join(db[,1]) %>% 
+  distinct() %>% 
+  mutate(elision = ifelse(is.na(elision), "нет", "есть")) %>%
+  mutate(n = ifelse(is.na(n), 0, n)) ->
+  elision
+
+map.feature(elision$language,
+            feature = elision$elision,
+            title = "элизия",
+            label = elision$language)
+```
+
+---
+## WCAD: элизия
+
+```{r}
+elision %>% 
+  filter(n > 0) ->
+  elision
+map.feature(elision$language,
+            minichart.data = elision$n,
+            minichart = "pie",
+            minichart.labels = TRUE,
+            width = 3,
+            label = elision$language)
 ```
 
 ---
