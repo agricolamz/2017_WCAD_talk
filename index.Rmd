@@ -1,7 +1,7 @@
 ---
 title: "World Consonant Alternation Database"
 subtitle: "первые результаты и несколько замечанйи о типологических выборках <br> https://goo.gl/4AQ65i"
-author: "Г. Мороз <br> Лаборотория языков Кавказа"
+author: "Г. Мороз <br> Лаборатория языков Кавказа, ШЛ"
 date: "Научный семинар Школы Лингвистики <br> (20 октября 2017)"
 output: 
    xaringan::moon_reader:
@@ -56,12 +56,13 @@ class: inverse, center, middle
 * (и как это объясняют разные фонологические теории?)
 * Какие звуковые изменения часто встречаются вместе, а какие не "дружат"?
 * Насколько звуковые изменения мотивированы фонологической системой?
+* Как универсалии/фриквенталии/рары в области звуковых изменений соотносятся с универсалиями в морфологии, синтаксисе и т. п.?
+* Создание data-driven типологии звуквых изменений.
 * Какие звуковые изменения встречаются везде, а какие характерны для
   * определенных языковых семей,
   * языковых союзов
   * или макроареалов?
-* Как универсалии/фриквенталии/рары в области звуковых изменений соотносятся с универсалиями в морфологии, синтаксисе и т. п.?
-* Создание data-driven типологии звуквых изменений.
+  * ... дискриптивной традиции?
 * ... наверное, еще масса всего, о чем я не подумал.
 
 ---
@@ -163,6 +164,59 @@ map.feature(elision$language,
 ```
 
 ---
+## WCAD: вставка
+
+```{r}
+db %>% 
+  mutate(insertion = grepl("Ø", `X →`)) %>% 
+  count(language, insertion) %>% 
+  filter(insertion == TRUE) %>% 
+  full_join(db[,1]) %>% 
+  distinct() %>% 
+  mutate(insertion = ifelse(is.na(insertion), "нет", "есть")) %>%
+  mutate(n = ifelse(is.na(n), 0, n)) ->
+  insertion
+
+map.feature(insertion$language,
+            feature = insertion$insertion,
+            title = "вставка",
+            label = insertion$language)
+```
+
+---
+## WCAD: вставка
+
+```{r}
+insertion %>%
+  filter(n > 0) ->
+  insertion
+map.feature(insertion$language,
+            minichart.data = insertion$n,
+            minichart = "pie",
+            minichart.labels = TRUE,
+            width = 3,
+            label = insertion$language)
+```
+
+---
+## WCAD: вставка и элизия
+
+```{r}
+colnames(elision)[3] <- "элизия"
+colnames(insertion)[3] <- "вставка"
+full_join(elision[-2], insertion[-2]) %>% 
+  filter(элизия > 0 | вставка > 0) ->
+  d
+
+map.feature(d$language,
+            minichart.data = d[, 2:3],
+            minichart = "bar",
+            minichart.labels = TRUE,
+            width = 6,
+            label = d$language)
+```
+
+---
 class: inverse, center, middle
 
 # О типологической выборке
@@ -174,10 +228,66 @@ class: inverse, center, middle
 * Bell, A. (1978). ‘Language Samples‘, in J. H. Greenberg, C. A. Ferguson, and E. A. Moravcsik (eds.), Universals of Human Language. Cambridge, MA: MIT Press, 123–56.
 * Dryer, M. S. (1989). ‘Large Linguistic Areas and Language Sampling’, Studies in Language 13: 257–92.
 * Janssen, D. P., Bickel, B., and Zúñiga, F. (2006). ‘Randomization Tests in Language Typology’, Linguistic Typology 10: 419–40.
+* Maslova E. (2000a). “A dynamic approach to the verification of distribu- tional universals.” Linguistic Typology, vol. 4, no. 3, 307–333.
+* Maslova E. (2000b). “Stochastic models in typology: obstacle or prerequisite?” Linguistic Typology, vol. 4, no. 3, 357–364.
+* Nichols J. (1992). Linguistic Diversity in Space and Time. Chicago: University of Chicago Press.
 * Perkins , R. D. (1989). ‘Statistical Techniques for Determining Language Sample Size’, Studies in Language 13: 293–315.
 * Rietveld, T., and van Hout, R. (1993). ‘Statistical Techniques for the Study of Language and Language Behaviour‘. Berlin: Mouton de Gruyter.
 * Ritkhoff, J., and Bakker, D. (1998). ‘Language Sampling’, Linguistic Typology 2: 263–314.
 * Widmann T. M. (2001) ‘Language Sampling for Typological Studies‘
+
+---
+## О типологической выборке: смещения
+
+* генетическое
+* контакты
+* ? культурное
+* типологическое
+* библиографическое
+* популяционное
+
+---
+### Diversity Value technique [Rijkhoff, Bakker 1998]
+
+$$C_k = C_{k-1} + (N_k - N_{k-1}) \times \frac{(MAX - (k-1))}{MAX}$$
+
+![](bakker.png)
+
+---
+### Markov chains [Manova 2000], [Widmann 2001]
+
+Переходы из одного типа в другой:
+
+| P(VSO → VSO) | P(SVO → VSO) | P(SOV → VSO) |
+|--------------|--------------|--------------|
+| P(VSO → SVO) | P(SVO → SVO) | P(SOV → SVO) |
+| P(VSO → SOV) | P(SVO → SOV) | P(SOV → SOV) |
+
+Произвольные вероятности из [Widmann 2001]:
+
+| 0.90 | 0.02 | 0.01 |
+|------|------|------|
+| 0.09 | 0.90 | 0.09 |
+| 0.01 | 0.08 | 0.90 |
+
+---
+### Markov chains [Widmann 2001]
+
+Type 1: VSO; Type 2: SVO; Type 3: SOV
+
+![](manova.png)
+
+
+---
+### Мое предложение
+
+* Исследуем все доступные материалы по всем семьям
+* Нет выборкам (но если очень нужно их можно делать из всех доступных данных)
+* Не обязательно ждать конца исследования, чтобы получить результаты (Байесовское мышление)
+* Сравниваем внутригрупповую дисперсию признака с дисперсией по всем группам
+  * получаем ответ на вопрос, что редко, что часто
+  * получаем "ответ" на вопрос: типологическое  vs. ареальное vs. генеалогическое
+* Empirical Bayes and Missing species problem
 
 ---
 class: middle
